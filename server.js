@@ -10,7 +10,7 @@ console.log("The Bot is running");
 bot.command("start", async(ctx) => {
     let userName = ctx.message.from.first_name;
     let startMessage = `👋Welcome ${userName}!\n\n🔍This Block Explorer provides you with Information about the Bitcoin Blockchain.\n\n
-🫵 You can check:\n\n🚦 The current transaction traffic\n🧮 How high is the hashrate?\n🤷🏽‍♂️ What is the recommended fee?\n⏳ What Blocktime is it?\n👀 Is your transaction already confirmed?\n🚀 And much more...\n\n⚙️ Commands:\n\n/start 📚 Start from the beginning.\n/explorer 🔭 Discover the Mempool.\n/help 📖 Read this help.\n/tip 🧡 Support the work.\n\n👋 Join us for feedback on https://t.me/theblockbot
+🫵 You can check:\n\n🚦 The current transaction traffic\n🧮 How high is the hashrate?\n🤷🏽‍♂️ What is the recommended fee?\n⏳ What Blocktime is it?\n👀 Is your transaction already confirmed?\n🚀 And much more...\n\n⚙️ Commands:\n\n/start 📚 Start from the beginning.\n/explorer 🔭 Discover the Mempool.\n/help 📖 Read this help.\n/tip 🧡 Support the work.\n\n👋 Join us for feedback on https://t.me/+SZAq0Vxjmrk1NDdi
 `;
     await ctx.reply(startMessage);
     console.log(ctx.message);
@@ -734,8 +734,8 @@ bot.hears(/^[13][0-9a-zA-Z]{32,34}$/gm, async(ctx) => {
         await ctx.reply("Too many outputs!\n\nMaybe time to consolidate?");
     }
 });
-//Takes an adress and returns UTXOS # BC1P
-bot.hears(/^bc1p[0-9a-zA-Z]{58}$/gm, async(ctx) => {
+//Takes an adress and returns UTXOS # BC1Q
+bot.hears(/^bc1q[0-9a-zA-Z]{58}$/gm, async(ctx) => {
     try {
         let adressMessage = ctx.match[0];
         //API
@@ -875,7 +875,7 @@ async function showRewardStats(ctx) {
 
         await bot.telegram.sendMessage(
             ctx.chat.id,
-            "Mining Rewards past 144 Blocks\n" + message, {
+            "Mining Rewards past 144 Blocks:\n(~1 day)\n" + message, {
                 reply_markup: {
                     inline_keyboard: [
                         [{
@@ -1000,15 +1000,17 @@ async function sendNetworkStats(ctx) {
         );
         let data = res.data.latest;
         let date = data.added;
-        let message = `\n⚡️ Nodes: ${data.node_count}\n😎 Channels: ${
+        let message = `\n⚡️ Nodes: ${data.node_count}\n\n😎 Channels: ${
       data.channel_count
-    }\n💰 Capacity: ${
+    }\n\n💰 Capacity: ${
       Math.round(data.total_capacity / 1000000) / 100
-    }BTC\n📐 Average Capacity: ${data.avg_capacity}sat\n💸 Average Fee Rate: ${
+    }BTC\n\n📐 Average Capacity: ${
+      data.avg_capacity
+    } sat\n\n💸 Average Fee Rate: ${
       data.avg_fee_rate
-    }ppm\n⚖️ Average Base Fee: ${
+    } ppm\n\n⚖️ Average Base Fee: ${
       data.avg_base_fee_mtokens
-    }ppm\n🕦 At the time: ${date}\n`;
+    } ppm\n\n🕦 At the time: ${date}\n`;
         await bot.telegram.sendMessage(
             ctx.chat.id,
             "Lastest Network Statistics:\n" + message, {
