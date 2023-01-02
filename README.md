@@ -1,12 +1,12 @@
 <div align="center">
-  <img src="./assets/theblockbot-logo.png" alt="theblockbot" height="200" width="auto" />
+  <img src="./assets/theblockbot-logo.png" alt="theblockbot" height="600" width="auto" />
 </div>
 
 ---
 
 <div align="center">
 
-A block explorer telegram🤖 bot for the bitcoin network.
+⛓⛓ A block explorer telegram🤖 bot for the bitcoin network. ⛓⛓
 
 [![https://t.me/the_blockbot](https://img.shields.io/badge/🤖%20Telegram-Bot-neon.svg)](https://t.me/the_blockbot) [![https://t.me/the_blockbot](https://img.shields.io/badge/💬%20Telegram-Channel-blue.svg)](https://t.me/+O4-FUn1pMBRmOTli) <a href="https://github.com/OrangeLiberty/The-Block-Bot/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" height="20"></a>
 
@@ -15,7 +15,7 @@ A block explorer telegram🤖 bot for the bitcoin network.
 <details>
  <summary><b>Table of Content</b></summary>
 
-- [Demo](#usage)
+- [Usage](#usage)
 - [Features](#features)
 - [Installation](#installation)
   - [Telegram setup](#telegram+setup)
@@ -26,15 +26,15 @@ A block explorer telegram🤖 bot for the bitcoin network.
 
 ## Usage
 
-The deployed version can be found on telegram as <a href="https://t.me/the_blockbot" target="_blank">@the_blockbot</a>
+⚡️ The deployed version can be found on telegram as <a href="https://t.me/the_blockbot" target="_blank">@the_blockbot</a>
 
 ## Features
 
-- Browse and search the `mempool`, `difficulty adjustment`, `block details` `fees` and more.
-- Ability to search `UTXOs` by adress
-- Ability to search `transaction` by transaction id
-- Ability to search `LN-Node` by node-pubkey
-- Ability to search `LN-Channel` by channel id
+- Browse and search the `mempool`, `difficulty adjustment`, `block details` `fees` and more. 🔥
+- Ability to search `UTXOs` by adress 📐
+- Ability to search `transaction` by transaction id 🔎
+- Ability to search `LN-Node` by node-pubkey 👁
+- Ability to search `LN-Channel` by channel id 🎯
 
 ## Installation
 
