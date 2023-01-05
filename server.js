@@ -3,6 +3,7 @@ require("dotenv").config();
 const { Telegraf } = require("telegraf");
 const { message } = require("telegraf/filters");
 const express = require("express");
+const axios = require("axios");
 const bot = new Telegraf(process.env.BOT_TOKEN);
 const app = express();
 const lightning = require("./src/topics/lightning");
@@ -300,6 +301,222 @@ bot.action("channelDetail", async(ctx) => {
     );
     await ctx.answerCbQuery();
     await ctx.deleteMessage();
+});
+//Inline Queries
+
+//Return the blocktime to a chat
+bot.inlineQuery("blocktime", async(ctx) => {
+    try {
+        //let message = ctx.inlineQuery.query
+        let res = await axios.get("https://mempool.space/api/blocks/tip/height");
+        let data = res.data;
+        let results = [{
+            type: "article",
+            id: "blocktime",
+            title: "⏳ Send current Blocktime to a chat.",
+            input_message_content: {
+                message_text: `⏳ Current Blocktime: ${data}`,
+            },
+            description: "Usage:\n@the_blockbot blocktime",
+            thumb_url: "https://i.ibb.co/8m37BMz/the-Block-Bot-logo.png",
+            thumb_width: 50,
+            thumb_height: 50,
+        }, ];
+        await bot.telegram.answerInlineQuery(ctx.inlineQuery.id, results);
+    } catch (error) {
+        console.log(error);
+        await ctx.answerInlineQuery("Something went wrong 🚧");
+    }
+});
+//return the difficulty to a chat
+bot.inlineQuery("difficulty", async(ctx) => {
+    try {
+        let res = await axios.get(
+            "https://mempool.space/api/v1/difficulty-adjustment"
+        );
+        let data = res.data;
+        let message = `Difficulty Adjustment:\n\n📊 Current Period: ${
+      Math.round(data.progressPercent * 100) / 100
+    } %\n\n📦 Remaining Blocks: ${
+      data.remainingBlocks
+    }\n\n🗒 Estimate Adjustment: ${
+      Math.round(data.difficultyChange * 100) / 100
+    } %\n\n🏁 Previous Retarget: ${
+      Math.round(data.previousRetarget * 100) / 100
+    } %\n`;
+        let results = [{
+            type: "article",
+            id: "difficulty",
+            title: "⚙️ Send Difficulty Adjustment to a chat.",
+            input_message_content: {
+                message_text: `${message}`,
+            },
+            description: "Usage:\n@the_blockbot difficulty",
+            thumb_url: "https://i.ibb.co/8m37BMz/the-Block-Bot-logo.png",
+            thumb_width: 50,
+            thumb_height: 50,
+        }, ];
+        await bot.telegram.answerInlineQuery(ctx.inlineQuery.id, results);
+    } catch (error) {
+        console.log(error);
+        await ctx.answerInlineQuery("Something went wrong 🚧");
+    }
+});
+//return the backlog to a chat
+bot.inlineQuery("backlog", async(ctx) => {
+    try {
+        //API
+        let res = await axios.get("https://mempool.space/api/mempool");
+        let data = res.data;
+
+        let weight = Math.round(data.vsize / 1000000) / 100;
+        let fees = Math.round(data.total_fee / 1000000) / 10000;
+        let message = `Current Backlog Statistics:\n\n🕦 Waiting Transactions: ${data.count}\n\n⚖️ Total size: ${weight} MWU\n\n💸 Total fees: ${fees} BTC`;
+
+        let results = [{
+            type: "article",
+            id: "backlog",
+            title: "📝 Send current Mempool Backlog to a chat.",
+            input_message_content: {
+                message_text: `${message}`,
+            },
+            description: "Usage:\n@the_blockbot backlog",
+            thumb_url: "https://i.ibb.co/8m37BMz/the-Block-Bot-logo.png",
+            thumb_width: 50,
+            thumb_height: 50,
+        }, ];
+        await bot.telegram.answerInlineQuery(ctx.inlineQuery.id, results);
+    } catch (error) {
+        console.log(error);
+        await ctx.answerInlineQuery("Something went wrong 🚧");
+    }
+});
+//Return the recommended fee to a chat
+bot.inlineQuery("fee", async(ctx) => {
+    try {
+        //API
+        let res = await axios.get("https://mempool.space/api/v1/fees/recommended");
+        let data = res.data;
+        let message = `Currently suggested fees for new transactions:\n\n😎 Min: ${data.minimumFee} sat/vB\n\n🐌 Slow: ${data.hourFee} sat/vB\n\n🏄🏿‍♀️ Medium: ${data.halfHourFee} sat/vB\n\n🚀 Fast: ${data.fastestFee} sat/vB\n`;
+
+        let results = [{
+            type: "article",
+            id: "fee",
+            title: "💸 Send recommended fee to a chat.",
+            input_message_content: {
+                message_text: `${message}`,
+            },
+            description: "Usage:\n@the_blockbot fee",
+            thumb_url: "https://i.ibb.co/8m37BMz/the-Block-Bot-logo.png",
+            thumb_width: 50,
+            thumb_height: 50,
+        }, ];
+        await bot.telegram.answerInlineQuery(ctx.inlineQuery.id, results);
+    } catch (error) {
+        console.log(error);
+        await ctx.answerInlineQuery("Something went wrong 🚧");
+    }
+});
+//Return lightning node details to a chat
+bot.inlineQuery(/^[A-Fa-f0-9]{66}$/gm, async(ctx) => {
+    try {
+        let pubKey = ctx.inlineQuery.query;
+        //API
+        let res = await axios.get(
+            `https://mempool.space/api/v1/lightning/nodes/${pubKey}`
+        );
+        let data = res.data;
+        let location = ``;
+        if (data.city === null) {
+            if (data.country !== null) {
+                location = data.country.en;
+            } else {
+                location = `Unknown`;
+            }
+        } else {
+            location = data.city.en + `, ` + data.country.en;
+        }
+        let message = `\n✍️ Alias: ${data.alias}\n\n🔑 Public Key: ${
+      data.public_key
+    }\n\n💰 Active Capacity: ${data.capacity} sat\n\n😎 Active Channels: ${
+      data.active_channel_count
+    }\n\n📐 Average Channel Size: ${Math.round(
+      data.capacity / data.active_channel_count
+    )} sat\n\n🌐 Location: ${location}\n\n📅 First Seen:\n ${new Date(
+      data.first_seen * 1000
+    )}\n🕦 Last Update:\n ${new Date(data.updated_at * 1000)}\n`;
+
+        let results = [{
+            type: "article",
+            id: "node",
+            title: "🔎 Send node details to a chat.",
+            input_message_content: {
+                message_text: `Node Details:\n${message}`,
+            },
+            description: "Usage:\n@the_blockbot <Node PubKey>",
+            thumb_url: "https://i.ibb.co/8m37BMz/the-Block-Bot-logo.png",
+            thumb_width: 50,
+            thumb_height: 50,
+        }, ];
+        await bot.telegram.answerInlineQuery(ctx.inlineQuery.id, results);
+    } catch (error) {
+        console.log(error);
+        await ctx.answerInlineQuery("Something went wrong 🚧");
+    }
+});
+////Return infos about a Lightning Channel with the given :channelID to a chat
+bot.inlineQuery(/^[0-9]{18}$/gm, async(ctx) => {
+    try {
+        let channelId = ctx.inlineQuery.query;
+        let res = await axios.get(
+            `https://mempool.space/api/v1/lightning/channels/${channelId}`
+        );
+        let data = res.data;
+        let message = `\n🆔 Channel ID: ${data.id}\n🕦 Created: ${
+      data.created
+    }\n📅 Closing date: ${data.closing_date}\n💰 Channel Capacity: ${
+      data.capacity
+    } sat\n\n👤 Channel Partner 1:\n✍️ Name: ${
+      data.node_left.alias
+    }\n🔑 Public Key: ${data.node_left.public_key}\n😎 Channels: ${
+      data.node_left.channels
+    }\n⚡️ Capacity: ${data.node_left.capacity} sat\n💸 Fee Rate: ${
+      data.node_left.fee_rate
+    } ppm\n💵 Base Fee: ${data.node_left.base_fee_mtokens} ppm\n📃 Min HTLC: ${
+      data.node_left.min_htlc_mtokens
+    } sat\n📝 Max HTLC: ${
+      data.node_left.max_htlc_mtokens / 1000
+    } sat\n👉 Timelock Delta: ${
+      data.node_left.cltv_delta
+    } Blocks\n\n👤 Channel Partner 2:\n✍️ Name: ${
+      data.node_right.alias
+    }\n🔑 Public Key: ${data.node_right.public_key}\n😎 Channels: ${
+      data.node_right.channels
+    }\n⚡️ Capacity: ${data.node_right.capacity} sat\n💸 Fee Rate: ${
+      data.node_right.fee_rate
+    } ppm\n💵 Base Fee: ${data.node_right.base_fee_mtokens} ppm\n📃 Min HTLC: ${
+      data.node_right.min_htlc_mtokens
+    } sat\n📝 Max HTLC: ${
+      data.node_right.max_htlc_mtokens / 1000
+    } sat\n👉 Timelock Delta: ${data.node_right.cltv_delta} Blocks\n`;
+
+        let results = [{
+            type: "article",
+            id: "channelid",
+            title: "📊 Send LN Channel details to a chat.",
+            input_message_content: {
+                message_text: `Lightning Channel Info:\n${message}`,
+            },
+            description: "Usage:\n@the_blockbot <18 digit Channel-ID>",
+            thumb_url: "https://i.ibb.co/8m37BMz/the-Block-Bot-logo.png",
+            thumb_width: 50,
+            thumb_height: 50,
+        }, ];
+        await bot.telegram.answerInlineQuery(ctx.inlineQuery.id, results);
+    } catch (error) {
+        console.log(error);
+        await ctx.answerInlineQuery("Something went wrong 🚧");
+    }
 });
 
 // Start the server

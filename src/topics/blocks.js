@@ -12,9 +12,14 @@ async function showBlocktime(ctx, bot) {
                 reply_markup: {
                     inline_keyboard: [
                         [{
-                            text: "🔙 Back to Block Informations",
-                            callback_data: "blocks",
-                        }, ],
+                                text: "🔝 Back to Top",
+                                callback_data: "explorer",
+                            },
+                            {
+                                text: "🔙 Back to Block Details",
+                                callback_data: "blocks",
+                            },
+                        ],
                     ],
                 },
             }
@@ -56,9 +61,14 @@ async function showLatestBlocks(ctx, bot) {
                 reply_markup: {
                     inline_keyboard: [
                         [{
-                            text: "🔙 Back to Block Informations",
-                            callback_data: "blocks",
-                        }, ],
+                                text: "🔝 Back to Top",
+                                callback_data: "explorer",
+                            },
+                            {
+                                text: "🔙 Back to Block Details",
+                                callback_data: "blocks",
+                            },
+                        ],
                     ],
                 },
             }

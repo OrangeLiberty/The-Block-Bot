@@ -29,19 +29,16 @@ module.exports = (bot) => {
       )} sat\n\n🌐 Location: ${location}\n\n📅 First Seen:\n ${new Date(
         data.first_seen * 1000
       )}\n🕦 Last Update:\n ${new Date(data.updated_at * 1000)}\n`;
-            await bot.telegram.sendMessage(
-                ctx.chat.id,
-                "Node Statistic:\n" + message, {
-                    reply_markup: {
-                        inline_keyboard: [
-                            [{
-                                text: "🔙 Back to Lightning Network Overview",
-                                callback_data: "lightning",
-                            }, ],
-                        ],
-                    },
-                }
-            );
+            await bot.telegram.sendMessage(ctx.chat.id, "Node Details:\n" + message, {
+                reply_markup: {
+                    inline_keyboard: [
+                        [{
+                            text: "🔙 Back to Lightning Network Overview",
+                            callback_data: "lightning",
+                        }, ],
+                    ],
+                },
+            });
         } catch (error) {
             console.log(error);
             await ctx.reply("Something went wrong 🚧");

@@ -12,6 +12,7 @@ module.exports = (bot) => {
             let data = res.data;
             let message = `⏳ Blocktime: ${blockTime}\n\n🧮Hash: ${data}`;
             await bot.telegram.sendMessage(ctx.chat.id, message, {
+                parse_mode: "HTML",
                 reply_markup: {
                     inline_keyboard: [
                         [{

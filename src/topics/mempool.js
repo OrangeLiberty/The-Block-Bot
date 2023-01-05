@@ -15,9 +15,14 @@ async function sendBacklog(ctx, bot) {
             reply_markup: {
                 inline_keyboard: [
                     [{
-                        text: "🔙 Back to Mempool Overview",
-                        callback_data: "mempool",
-                    }, ],
+                            text: "🔝 Back to Top",
+                            callback_data: "explorer",
+                        },
+                        {
+                            text: "🔙 Back to Mempool",
+                            callback_data: "mempool",
+                        },
+                    ],
                 ],
             },
         });
@@ -53,9 +58,14 @@ async function sendProjectedBlocks(ctx, bot) {
                 reply_markup: {
                     inline_keyboard: [
                         [{
-                            text: "🔙 Back to Mempool Overview",
-                            callback_data: "mempool",
-                        }, ],
+                                text: "🔝 Back to Top",
+                                callback_data: "explorer",
+                            },
+                            {
+                                text: "🔙 Back to Mempool",
+                                callback_data: "mempool",
+                            },
+                        ],
                     ],
                 },
             }

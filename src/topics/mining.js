@@ -25,9 +25,14 @@ async function showHashrate(ctx, bot) {
                 reply_markup: {
                     inline_keyboard: [
                         [{
-                            text: "🔙 Back to Mining Overview",
-                            callback_data: "mining",
-                        }, ],
+                                text: "🔝 Back to Top",
+                                callback_data: "explorer",
+                            },
+                            {
+                                text: "🔙 Back to Mining",
+                                callback_data: "mining",
+                            },
+                        ],
                     ],
                 },
             }
@@ -59,9 +64,14 @@ async function showRewardStats(ctx, bot) {
                 reply_markup: {
                     inline_keyboard: [
                         [{
-                            text: "🔙 Back to Mining Overview",
-                            callback_data: "mining",
-                        }, ],
+                                text: "🔝 Back to Top",
+                                callback_data: "explorer",
+                            },
+                            {
+                                text: "🔙 Back to Mining",
+                                callback_data: "mining",
+                            },
+                        ],
                     ],
                 },
             }
@@ -96,9 +106,14 @@ async function showPoolHashrate(ctx, bot) {
                 reply_markup: {
                     inline_keyboard: [
                         [{
-                            text: "🔙 Back to Mining Overview",
-                            callback_data: "mining",
-                        }, ],
+                                text: "🔝 Back to Top",
+                                callback_data: "explorer",
+                            },
+                            {
+                                text: "🔙 Back to Mining",
+                                callback_data: "mining",
+                            },
+                        ],
                     ],
                 },
             }
@@ -125,9 +140,14 @@ async function showPoolBlocks(ctx, bot) {
                 reply_markup: {
                     inline_keyboard: [
                         [{
-                            text: "🔙 Back to Mining Overview",
-                            callback_data: "mining",
-                        }, ],
+                                text: "🔝 Back to Top",
+                                callback_data: "explorer",
+                            },
+                            {
+                                text: "🔙 Back to Mining",
+                                callback_data: "mining",
+                            },
+                        ],
                     ],
                 },
             }

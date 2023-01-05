@@ -22,9 +22,14 @@ async function sendTopCountry(ctx, bot) {
                 reply_markup: {
                     inline_keyboard: [
                         [{
-                            text: "🔙 Back to Lightning Network Overview",
-                            callback_data: "lightning",
-                        }, ],
+                                text: "🔝 Back to Top",
+                                callback_data: "explorer",
+                            },
+                            {
+                                text: "🔙 Back to Lightning",
+                                callback_data: "lightning",
+                            },
+                        ],
                     ],
                 },
             }
@@ -60,9 +65,14 @@ async function sendNetworkStats(ctx, bot) {
                 reply_markup: {
                     inline_keyboard: [
                         [{
-                            text: "🔙 Back to Lightning Network Overview",
-                            callback_data: "lightning",
-                        }, ],
+                                text: "🔝 Back to Top",
+                                callback_data: "explorer",
+                            },
+                            {
+                                text: "🔙 Back to Lightning",
+                                callback_data: "lightning",
+                            },
+                        ],
                     ],
                 },
             }
@@ -101,9 +111,14 @@ async function sendTopLiquidity(ctx, bot) {
                 reply_markup: {
                     inline_keyboard: [
                         [{
-                            text: "🔙 Back to Lightning Network Overview",
-                            callback_data: "lightning",
-                        }, ],
+                                text: "🔝 Back to Top",
+                                callback_data: "explorer",
+                            },
+                            {
+                                text: "🔙 Back to Lightning",
+                                callback_data: "lightning",
+                            },
+                        ],
                     ],
                 },
             }
@@ -141,9 +156,14 @@ async function sendTopChannel(ctx, bot) {
                 reply_markup: {
                     inline_keyboard: [
                         [{
-                            text: "🔙 Back to Lightning Network Overview",
-                            callback_data: "lightning",
-                        }, ],
+                                text: "🔝 Back to Top",
+                                callback_data: "explorer",
+                            },
+                            {
+                                text: "🔙 Back to Lightning",
+                                callback_data: "lightning",
+                            },
+                        ],
                     ],
                 },
             }
