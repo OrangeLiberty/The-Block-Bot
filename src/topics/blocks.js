@@ -41,7 +41,7 @@ async function showLatestBlocks(ctx, bot) {
             message += `------\n📦 Block: ${data[i].height}
 🧮 Hash: ${data[i].id}
 📝 Transactions: ${data[i].tx_count}
-💸 Median Fee: ${data[i].extras.medianFee}
+💸 Median Fee: ${data[i].extras.medianFee} sat
 📐 Size: ${Math.round(data[i].size / 10000) / 100} MB
 ⚖️ Weight: ${Math.round(data[i].weight / 10000) / 100} MWU
 📅 Timestamp: ${new Date(data[i].timestamp * 1000)} (~ ${Math.round(

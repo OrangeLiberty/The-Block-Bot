@@ -157,9 +157,50 @@ async function showPoolBlocks(ctx, bot) {
         await ctx.reply("Something went wrong 🚧");
     }
 }
+//Return the Poolslug Details
+async function showPool(ctx, bot) {
+    try {
+        let pool = ctx.match[0];
+        let res = await axios.get(
+            `https://mempool.space/api/v1/mining/pool/${pool}`
+        );
+        let data = res.data;
+        console.log(data);
+        let message = `✍️ Name: ${data.pool.name}\n🔗 Link: ${data.pool.link}\n📦 Block Count:\nAll: ${data.blockCount.all} 1W: ${data.blockCount["1w"]} 24h: ${data.blockCount["24h"]}\n🧮 Hashrate: ${data.estimatedHashrate} Hashes/sec\n`;
+        let adresses = ``;
+        let i = 0;
+        for (const item of data.pool.addresses) {
+            adresses += `${item}\n`;
+            i++;
+        }
+        bot.telegram.sendMessage(
+            ctx.chat.id,
+            "Mining Pool Information:\n\n" + message + "Known Adresses:\n" + adresses, {
+                reply_markup: {
+                    inline_keyboard: [
+                        [{
+                                text: "🔝 Back to Top",
+                                callback_data: "explorer",
+                            },
+                            {
+                                text: "🔙 Back to Pools",
+                                callback_data: "poolDetail",
+                            },
+                        ],
+                    ],
+                },
+            }
+        );
+    } catch (error) {
+        console.log(error);
+        await ctx.reply("Something went wrong 🚧");
+    }
+}
+
 module.exports = {
     showHashrate,
     showRewardStats,
     showPoolHashrate,
     showPoolBlocks,
+    showPool,
 };

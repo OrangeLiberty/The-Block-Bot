@@ -229,6 +229,34 @@ bot.action("poolBlocks", async(ctx) => {
     await ctx.answerCbQuery();
     await ctx.deleteMessage();
 });
+//Handle the poolDetail callback from Mining Overview
+bot.action("poolDetail", async(ctx) => {
+    await template.sendPoolTemplate(ctx, bot);
+    await ctx.answerCbQuery();
+    await ctx.deleteMessage();
+});
+
+bot.action(
+    [
+        "slushpool",
+        "antpool",
+        "f2pool",
+        "binancepool",
+        "viabtc",
+        "btccom",
+        "poolin",
+        "luxor",
+        "marapool",
+        "sbicrypto",
+        "ultimuspool",
+        "foundryusa",
+    ],
+    async(ctx) => {
+        await mining.showPool(ctx, bot);
+        await ctx.answerCbQuery();
+        await ctx.deleteMessage();
+    }
+);
 
 //Handle the Lightning callback from Total Overview
 bot.action("lightning", async(ctx) => {
@@ -337,11 +365,9 @@ bot.inlineQuery("difficulty", async(ctx) => {
         let data = res.data;
         let message = `Difficulty Adjustment:\n\n📊 Current Period: ${
       Math.round(data.progressPercent * 100) / 100
-    } %\n\n📦 Remaining Blocks: ${
-      data.remainingBlocks
-    }\n\n🗒 Estimate Adjustment: ${
+    } %\n📦 Remaining Blocks: ${data.remainingBlocks}\n🗒 Estimate Adjustment: ${
       Math.round(data.difficultyChange * 100) / 100
-    } %\n\n🏁 Previous Retarget: ${
+    } %\n🏁 Previous Retarget: ${
       Math.round(data.previousRetarget * 100) / 100
     } %\n`;
         let results = [{
@@ -371,7 +397,7 @@ bot.inlineQuery("backlog", async(ctx) => {
 
         let weight = Math.round(data.vsize / 1000000) / 100;
         let fees = Math.round(data.total_fee / 1000000) / 10000;
-        let message = `Current Backlog Statistics:\n\n🕦 Waiting Transactions: ${data.count}\n\n⚖️ Total size: ${weight} MWU\n\n💸 Total fees: ${fees} BTC`;
+        let message = `Current Backlog Statistics:\n\n🕦 Waiting Transactions: ${data.count}\n⚖️ Total size: ${weight} MWU\n💸 Total fees: ${fees} BTC`;
 
         let results = [{
             type: "article",
@@ -397,7 +423,7 @@ bot.inlineQuery("fee", async(ctx) => {
         //API
         let res = await axios.get("https://mempool.space/api/v1/fees/recommended");
         let data = res.data;
-        let message = `Currently suggested fees for new transactions:\n\n😎 Min: ${data.minimumFee} sat/vB\n\n🐌 Slow: ${data.hourFee} sat/vB\n\n🏄🏿‍♀️ Medium: ${data.halfHourFee} sat/vB\n\n🚀 Fast: ${data.fastestFee} sat/vB\n`;
+        let message = `Currently suggested fees for new transactions:\n\n😎 Min: ${data.minimumFee} sat/vB\n🐌 Slow: ${data.hourFee} sat/vB\n🏄🏿‍♀️ Medium: ${data.halfHourFee} sat/vB\n🚀 Fast: ${data.fastestFee} sat/vB\n`;
 
         let results = [{
             type: "article",
@@ -436,13 +462,13 @@ bot.inlineQuery(/^[A-Fa-f0-9]{66}$/gm, async(ctx) => {
         } else {
             location = data.city.en + `, ` + data.country.en;
         }
-        let message = `\n✍️ Alias: ${data.alias}\n\n🔑 Public Key: ${
+        let message = `\n✍️ Alias: ${data.alias}\n🔑 Public Key: ${
       data.public_key
-    }\n\n💰 Active Capacity: ${data.capacity} sat\n\n😎 Active Channels: ${
+    }\n💰 Active Capacity: ${data.capacity} sat\n😎 Active Channels: ${
       data.active_channel_count
-    }\n\n📐 Average Channel Size: ${Math.round(
+    }\n📐 Average Channel Size: ${Math.round(
       data.capacity / data.active_channel_count
-    )} sat\n\n🌐 Location: ${location}\n\n📅 First Seen:\n ${new Date(
+    )} sat\n🌐 Location: ${location}\n📅 First Seen:\n ${new Date(
       data.first_seen * 1000
     )}\n🕦 Last Update:\n ${new Date(data.updated_at * 1000)}\n`;
 
@@ -451,7 +477,7 @@ bot.inlineQuery(/^[A-Fa-f0-9]{66}$/gm, async(ctx) => {
             id: "node",
             title: "🔎 Send node details to a chat.",
             input_message_content: {
-                message_text: `Node Details:\n${message}`,
+                message_text: `Lightning Node Details:\n${message}`,
             },
             description: "Usage:\n@the_blockbot <Node PubKey>",
             thumb_url: "https://i.ibb.co/8m37BMz/the-Block-Bot-logo.png",
@@ -521,7 +547,7 @@ bot.inlineQuery(/^[0-9]{18}$/gm, async(ctx) => {
 
 // Start the server
 if (process.env.NODE_ENV === "production") {
-    // Use Webhooks for the production server
+    //Webhooks for the production server
     //app.use(express.json());
     app.use(bot.webhookCallback("/"));
 
@@ -537,6 +563,6 @@ if (process.env.NODE_ENV === "production") {
         console.log(`Bot listening on port ${PORT}`);
     });
 } else {
-    // Use Long Polling for development
+    // Long Polling for development
     bot.launch();
 }

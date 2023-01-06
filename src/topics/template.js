@@ -105,11 +105,14 @@ async function sendMiningTemplate(ctx, bot) {
                             text: "💰 Reward Statistics",
                             callback_data: "rewardStats",
                         }, ],
-                        //Hier weiter coden!
                         [{ text: "📈 Pool Hashrates", callback_data: "poolHashrate" }],
                         [{
                             text: "📊 Blocks found by Pools",
                             callback_data: "poolBlocks",
+                        }, ],
+                        [{
+                            text: "🏭 Pool Informations",
+                            callback_data: "poolDetail",
                         }, ],
                         [{
                             text: "🔙 Back to Total Overview",
@@ -124,6 +127,50 @@ async function sendMiningTemplate(ctx, bot) {
         await ctx.reply("Something went wrong 🚧");
     }
 }
+//Pool Detail Template
+async function sendPoolTemplate(ctx, bot) {
+    try {
+        await bot.telegram.sendMessage(ctx.chat.id, "Select a Pool 👇", {
+            reply_markup: {
+                inline_keyboard: [
+                    [
+                        { text: "Slushpool", callback_data: "slushpool" },
+                        { text: "AntPool", callback_data: "antpool" },
+                        { text: "F2Pool", callback_data: "f2pool" },
+                    ],
+                    [
+                        { text: "Binance Pool", callback_data: "binancepool" },
+                        { text: "ViaBTC", callback_data: "viabtc" },
+                        { text: "BTC.com", callback_data: "btccom" },
+                    ],
+                    [
+                        { text: "Poolin", callback_data: "poolin" },
+                        { text: "Luxor", callback_data: "luxor" },
+                        { text: "MARA Pool", callback_data: "marapool" },
+                    ],
+                    [
+                        { text: "SBI Crypto", callback_data: "sbicrypto" },
+                        { text: "ULTIMUSPOOL", callback_data: "ultimuspool" },
+                        { text: "Foundry USA", callback_data: "foundryusa" },
+                    ],
+                    [{
+                            text: "🔝 Back to Top",
+                            callback_data: "explorer",
+                        },
+                        {
+                            text: "🔙 Back to Mining",
+                            callback_data: "mining",
+                        },
+                    ],
+                ],
+            },
+        });
+    } catch (error) {
+        console.log(error);
+        ctx.reply("Something went wrong 🚧");
+    }
+}
+
 //Lightning Network Template
 async function sendLightningTemplate(ctx, bot) {
     try {
@@ -172,4 +219,5 @@ module.exports = {
     sendBlockTemplate,
     sendMiningTemplate,
     sendLightningTemplate,
+    sendPoolTemplate,
 };
