@@ -253,6 +253,7 @@ bot.action(
     ],
     async(ctx) => {
         await mining.showPool(ctx, bot);
+        await ctx.answerCbQuery();
         await ctx.deleteMessage();
     }
 );

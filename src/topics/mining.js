@@ -173,7 +173,7 @@ async function showPool(ctx, bot) {
             adresses += `${item}\n`;
             i++;
         }
-        bot.telegram.sendMessage(
+        await bot.telegram.sendMessage(
             ctx.chat.id,
             "Mining Pool Information:\n\n" + message + "Known Adresses:\n" + adresses, {
                 reply_markup: {
@@ -191,7 +191,6 @@ async function showPool(ctx, bot) {
                 },
             }
         );
-        await ctx.answerCbQuery();
     } catch (error) {
         console.log(error);
         await ctx.reply("Something went wrong 🚧");
