@@ -191,6 +191,7 @@ async function showPool(ctx, bot) {
                 },
             }
         );
+        await ctx.answerCbQuery();
     } catch (error) {
         console.log(error);
         await ctx.reply("Something went wrong 🚧");
