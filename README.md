@@ -8,7 +8,7 @@
 
 ⛓⛓ A block explorer telegram🤖 bot for the bitcoin network. ⛓⛓
 
-[![https://t.me/the_blockbot](https://img.shields.io/badge/🤖%20Telegram-Bot-neon.svg)](https://t.me/the_blockbot) [![https://t.me/the_blockbot](https://img.shields.io/badge/💬%20Telegram-Channel-blue.svg)](https://t.me/+O4-FUn1pMBRmOTli) <a href="https://github.com/OrangeLiberty/The-Block-Bot/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" height="20"></a>
+[![https://t.me/the_blockbot](https://img.shields.io/badge/🤖%20Telegram-Bot-neon.svg)](https://t.me/the_blockbot) [![https://t.me/the_blockbot](https://img.shields.io/badge/💬%20Telegram-Channel-blue.svg)](https://t.me/+RKtnoB4n1ys0ZWNi) <a href="https://github.com/OrangeLiberty/The-Block-Bot/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" height="20"></a>
 
 </div>
 
