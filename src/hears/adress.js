@@ -97,7 +97,7 @@ module.exports = (bot) => {
 🍰 UTXO: ${i}
 🪪 Transaction-Id: ${item.txid}
 📍 Position: ${item.vout + 1}
-✅ Confirmed: ${item.status.confirmed} @⏳Blocktime ${item.status.block_height}
+✅ Confirmed: ${item.status.confirmed} @⏳ Blocktime ${item.status.block_height}
 🧮 Block Hash: ${item.status.block_hash}
 💰 Value: ${item.value / 100000000} BTC\n
 `;
