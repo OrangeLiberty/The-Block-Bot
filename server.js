@@ -544,6 +544,39 @@ bot.inlineQuery(/^[0-9]{18}$/gm, async(ctx) => {
         await ctx.answerInlineQuery("Something went wrong 🚧");
     }
 });
+//Return the halving countdown to a chat
+bot.inlineQuery("halving", async(ctx) => {
+    try {
+        //let message = ctx.inlineQuery.query
+        let res = await axios.get("https://mempool.space/api/blocks/tip/height");
+        let data = res.data;
+        if (data <= 840000) {
+            let period = data - 630000;
+            let halving = 840000 - data;
+            let halvingTime = (halving * 10) / 60 / 24;
+            let halvingDays = Math.round(halvingTime);
+            let progress = (period * 100) / 210000;
+            console.log(progress);
+            let percent = Math.round(progress * 100) / 100;
+            let results = [{
+                type: "article",
+                id: "halving",
+                title: "⏰ Send Halving Information to a chat.",
+                input_message_content: {
+                    message_text: `⏰ Bitcoin Halving Countdown:\n🗓 ${halvingDays} days left\n📦 Blocks remaining: ${halving}\n🏁 Progress: ${percent} %`,
+                },
+                description: "Usage:\n@the_blockbot halving",
+                thumb_url: "https://i.ibb.co/8m37BMz/the-Block-Bot-logo.png",
+                thumb_width: 50,
+                thumb_height: 50,
+            }, ];
+            await bot.telegram.answerInlineQuery(ctx.inlineQuery.id, results);
+        }
+    } catch (error) {
+        console.log(error);
+        await ctx.answerInlineQuery("Something went wrong 🚧");
+    }
+});
 
 // Start the server
 if (process.env.NODE_ENV === "production") {

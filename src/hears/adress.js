@@ -16,7 +16,7 @@ module.exports = (bot) => {
                 message += `
 🍰 UTXO: ${i}
 🪪 Transaction-Id: ${item.txid}
-🔄 Usage count: ${item.vout}
+📍 Position: ${item.vout + 1}
 ✅ Confirmed: ${item.status.confirmed} @⏳ Blocktime ${item.status.block_height}
 🧮 Block Hash: ${item.status.block_hash}
 💰 Value: ${item.value / 100000000} BTC\n
@@ -56,7 +56,7 @@ module.exports = (bot) => {
                 message += `
 🍰 UTXO: ${i}
 🪪 Transaction-Id: ${item.txid}
-🔄 Usage count: ${item.vout}
+📍 Position: ${item.vout + 1}
 ✅ Confirmed: ${item.status.confirmed} @⏳ Blocktime ${item.status.block_height}
 🧮 Block Hash: ${item.status.block_hash}
 💰 Value: ${item.value / 100000000} BTC\n
@@ -96,7 +96,7 @@ module.exports = (bot) => {
                 message += `
 🍰 UTXO: ${i}
 🪪 Transaction-Id: ${item.txid}
-🔄 Usage count: ${item.vout}
+📍 Position: ${item.vout + 1}
 ✅ Confirmed: ${item.status.confirmed} @⏳Blocktime ${item.status.block_height}
 🧮 Block Hash: ${item.status.block_hash}
 💰 Value: ${item.value / 100000000} BTC\n
