@@ -134,7 +134,7 @@ async function sendPoolTemplate(ctx, bot) {
             reply_markup: {
                 inline_keyboard: [
                     [
-                        { text: "Slushpool", callback_data: "slushpool" },
+                        { text: "Braiinspool", callback_data: "braiinspool" },
                         { text: "AntPool", callback_data: "antpool" },
                         { text: "F2Pool", callback_data: "f2pool" },
                     ],

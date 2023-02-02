@@ -238,7 +238,7 @@ bot.action("poolDetail", async(ctx) => {
 
 bot.action(
     [
-        "slushpool",
+        "braiinspool",
         "antpool",
         "f2pool",
         "binancepool",
